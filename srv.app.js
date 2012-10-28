@@ -15,7 +15,7 @@ define(['kickstart', 'module', 'path', 'fs'], function (kickstart, module, path,
   /**
    * Load file with example snippets
    */
-  var fileContents = fs.readFileSync('./examples.snippet'),
+  var fileContents = fs.readFileSync(path.dirname(module.uri) + '/examples.snippet'),
     sections = (fileContents + '').split('###'),
     examples = {};
   for (var i = 0; i < sections.length; i++) {
