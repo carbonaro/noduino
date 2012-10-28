@@ -50,7 +50,7 @@ define(function(require, exports, module) {
   SocketNoduino.prototype.checkSocket = function() {
     /** This is Client code: This works in your web browser */
     if (!this.io) {
-      this.io = io.connect(this.options.host); 
+      this.io = io.connect("http://" + window.location.hostname + ":8090"); 
       this.boards[0] = Board;
     }
     

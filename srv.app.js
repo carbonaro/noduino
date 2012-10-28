@@ -9,7 +9,7 @@
  */
  
 define(['kickstart', 'module', 'path', 'fs'], function (kickstart, module, path, fs) {
-  var kickstart = kickstart.withConfig({'name': '*', 'port': 8080, 'path': './'});
+  var kickstart = kickstart.withConfig({'name': '*', 'port': 8080, 'path': path.dirname(module.uri)});
   var srv = kickstart.srv();
   
   /**
