@@ -8,7 +8,7 @@
     "url": "git://github.com/semu/noduino.git"
   },
   "dependencies": {
-    "serialport": "*",
+    "serialport": "1.0.6",
     "colors": "*",
     "kickstart": "*",
     "socket.io": "*",
