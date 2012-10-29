@@ -13,7 +13,7 @@ $ > node app.js
 Listening on http://localhost:8080
 
 ###connect
-var Noduino = new NoduinoObj({debug: true, host: 'http://localhost:8090'}, Connector);
+var Noduino = new NoduinoObj({debug: true, host: "http://" + window.location.hostname + ":8090"}, Connector);
 Noduino.connect(function(err, board) {
   if (err) { return console.log(err); }
   
