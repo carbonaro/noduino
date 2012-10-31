@@ -8,7 +8,7 @@
  * @url         https://github.com/semu/noduino
  */
  
-define(['kickstart', 'module', 'path', 'fs'], function (kickstart, module, path, fs) {
+define(['kickstart', 'module', 'path', 'fs', 'os'], function (kickstart, module, path, fs, os) {
   var kickstart = kickstart.withConfig({'name': '*', 'port': 8080, 'path': path.dirname(module.uri)});
   var srv = kickstart.srv();
   
@@ -25,11 +25,19 @@ define(['kickstart', 'module', 'path', 'fs'], function (kickstart, module, path,
     examples[key] = tmp.join("\n");
   }
 
+
   /** 
    * Catch request for serving home page
    */
   srv.all('/', function(req, res) {
-    res.render('home', {jsApp: 'main', active: 'home', title: 'noduino', 'examples': examples});
+    // Determin IP address on eth0 interface
+    var ifaces=os.networkInterfaces();
+    var eth0_address = '127.0.0.1';
+    ifaces.eth0.forEach(function(details) {
+      if (details.family=='IPv4')
+        eth0_address = details.address;
+    });
+    res.render('home', {jsApp: 'main', active: 'home', title: 'noduino', 'examples': examples, 'eth0_address': eth0_address});
   });
 
   /** 
