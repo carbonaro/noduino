@@ -25,18 +25,23 @@ define(['kickstart', 'module', 'path', 'fs', 'os'], function (kickstart, module,
     examples[key] = tmp.join("\n");
   }
 
-
+  function getHostAddress() {
+    var ifaces=os.networkInterfaces();
+    var eth0_address = '127.0.0.1';
+    if ('undefined' != typeof(ifaces.eth0)) {
+      ifaces.eth0.forEach(function(details) {
+        if (details.family=='IPv4')
+          eth0_address = details.address;
+      });
+    }
+    return eth0_address;
+  }
   /** 
    * Catch request for serving home page
    */
   srv.all('/', function(req, res) {
     // Determin IP address on eth0 interface
-    var ifaces=os.networkInterfaces();
-    var eth0_address = '127.0.0.1';
-    ifaces.eth0.forEach(function(details) {
-      if (details.family=='IPv4')
-        eth0_address = details.address;
-    });
+    var eth0_address = getHostAddress();
     res.render('home', {jsApp: 'main', active: 'home', title: 'noduino', 'examples': examples, 'eth0_address': eth0_address});
   });
 
@@ -53,6 +58,10 @@ define(['kickstart', 'module', 'path', 'fs', 'os'], function (kickstart, module,
   srv.all('/example-walkLED.html', function(req, res) {
     res.render('example-walkLED', {jsApp: 'walkLED', active: 'examples', title: 'noduino', 'examples': examples});
   });
-  
+
+  srv.all('/test', function(req, res) {
+    res.render('test', {layout: 'minimal.jade', jsApp: 'test', eth0_address: getHostAddress()});
+  });
+
   return {'kickstart': kickstart, 'srv': srv};
 });

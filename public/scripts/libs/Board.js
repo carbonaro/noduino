@@ -8,7 +8,7 @@
  * @url         https://github.com/semu/noduino
  */
 
-define(['./LED.js', './Button.js', './AnalogInput.js',  './DigitalOutput.js', './Speaker.js'], function(LEDObj, ButtonObj, AnalogInputObj, DigitalOutObj, SpeakerObj) {
+define(['./LED.js', './Button.js', './AnalogInput.js',  './DigitalOutput.js', './Speaker.js', './Servo.js'], function(LEDObj, ButtonObj, AnalogInputObj, DigitalOutObj, SpeakerObj, ServoObj) {
 
   /**
    * Create Board
@@ -35,7 +35,7 @@ define(['./LED.js', './Button.js', './AnalogInput.js',  './DigitalOutput.js', '.
       if (err) { return next(err); }
     });
   };
-  
+
   /**
    * Check if pin is already in use
    * @param integer pin pin number
@@ -53,7 +53,7 @@ define(['./LED.js', './Button.js', './AnalogInput.js',  './DigitalOutput.js', '.
   Board.prototype.pinType = function(pin) {
     return this.pinMapping[pin];
   }
-  
+
   /**
    * Create AnalogInput object on board
    * @param object options
@@ -62,7 +62,7 @@ define(['./LED.js', './Button.js', './AnalogInput.js',  './DigitalOutput.js', '.
   Board.prototype.withAnalogInput = function(options, next) {
     this.with(this.c.TYPE_ANALOGIN, options, next);
   }
-  
+
   /**
    * Create Button object on board
    * @param object options
@@ -88,6 +88,15 @@ define(['./LED.js', './Button.js', './AnalogInput.js',  './DigitalOutput.js', '.
    */
   Board.prototype.withLED = function(options, next) {
     this.with(this.c.TYPE_LED, options, next);
+  };
+
+  /**
+   * Create Servo object on board
+   * @param object options
+   * @param function callback
+   */
+  Board.prototype.withServo = function(options, next) {
+    this.with(this.c.TYPE_SERVO, options, next);
   };
 
   /**
@@ -141,6 +150,12 @@ define(['./LED.js', './Button.js', './AnalogInput.js',  './DigitalOutput.js', '.
         this.c.withDigitalOut(options.pin, function(err, pin) {
           if (err) { return next(err); }    
           next(null, new SpeakerObj({"pin": pin, "type": what}, that.c));
+        });
+      break;
+      case this.c.TYPE_SERVO:
+        this.c.withServo(options.pin, function(err, pin) {
+          if (err) { return next(err); }
+          next(null, new ServoObj({"pin": pin, "type": what}, that.c));
         });
       break;
     }

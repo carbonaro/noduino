@@ -28,6 +28,7 @@ define(function(require, exports, module) {
   SerialNoduino.prototype.TYPE_ANALOGIN = 0x33;
   SerialNoduino.prototype.TYPE_DIGITALOUT = 0x34;
   SerialNoduino.prototype.TYPE_SPEAKER = 0x35;
+  SerialNoduino.prototype.TYPE_SERVO = 0x36;
   
   SerialNoduino.prototype.current = function() {
     return this.boards[0];
@@ -53,6 +54,11 @@ define(function(require, exports, module) {
     });
   }
 
+  SerialNoduino.prototype.withServo = function(pin, next) {
+    var p = this.current().normalizePin(pin || 9);
+    next(null, pin);
+  };
+
   SerialNoduino.prototype.withLED = function(pin, next) {
     this.current().pinMode(pin, this.MODE_OUT);
     next(null, pin);
@@ -62,12 +68,12 @@ define(function(require, exports, module) {
     this.current().pinMode(pin, this.MODE_IN);
     next(null, pin);
   };
-  
+
   SerialNoduino.prototype.withAnalogIn = function(pin, next) {
     this.current().pinMode(pin, this.MODE_IN);
     next(null, pin);
   }  
-  
+
   SerialNoduino.prototype.digitalWrite = function(pin, mode, next) {
     this.current().digitalWrite(pin, mode, next);
   };  
@@ -77,7 +83,7 @@ define(function(require, exports, module) {
     setInterval(function () {
       that.current().analogRead(AnalogInput.pin);
     }, 50);
-  
+
     this.current().on('data', function(m) {
       m = m.split('::');
       var event = {pin: that.normalizePin(m[0]), 'state': m[1]*1};

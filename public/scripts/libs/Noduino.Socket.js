@@ -42,6 +42,7 @@ define(function(require, exports, module) {
   SocketNoduino.prototype.TYPE_ANALOGIN = 0x33;
   SocketNoduino.prototype.TYPE_DIGITALOUT = 0x34;
   SocketNoduino.prototype.TYPE_SPEAKER = 0x35;
+  SocketNoduino.prototype.TYPE_SERVO = 0x36;
   
   SocketNoduino.prototype.current = function() {
     return this;
