@@ -15,10 +15,10 @@ require(["jquery", pl + 'Noduino.js', pl + 'Noduino.Socket.js', pl + 'Logger.HTM
       Noduino = new NoduinoObj({debug: true, host: 'http://' + host + ':8090', logger: {container: '#connection-log'}}, Connector, Logger);
       Noduino.connect(function(err, board) {
         console.log("zob");
-        board.withServo({pin: 9}, function(err, s) {
-          s.attach();
+        board.withServo({pin: 9, pos: 45}, function(err, s) {
           servo = s;
-          Servo.write(45);
+          servo.attach();
+          console.log(servo);
         });
       });
     }

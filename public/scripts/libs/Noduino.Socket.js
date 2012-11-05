@@ -132,6 +132,11 @@ define(function(require, exports, module) {
     next(null, pin);
   };
   
+  SocketNoduino.prototype.withServo = function(pin, next) {
+    this.pinMode(pin, this.MODE_OUT);
+    next(null, pin);
+  }
+
   SocketNoduino.prototype.withAnalogIn = function(pin, next) {
     this.pinMode(pin, this.MODE_IN);
     next(null, pin);
