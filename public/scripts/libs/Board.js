@@ -100,7 +100,7 @@ define(['./LED.js', './Button.js', './AnalogInput.js',  './DigitalOutput.js', '.
   };
 
   Board.prototype.withLcd = function(next) {
-    this.with(this.c.TYPE_LCD, options, next);
+    this.with(this.c.TYPE_LCD, next);
   };
 
   /**
