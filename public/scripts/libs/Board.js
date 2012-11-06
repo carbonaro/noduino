@@ -8,7 +8,7 @@
  * @url         https://github.com/semu/noduino
  */
 
-define(['./LED.js', './Button.js', './AnalogInput.js',  './DigitalOutput.js', './Speaker.js', './Servo.js'], function(LEDObj, ButtonObj, AnalogInputObj, DigitalOutObj, SpeakerObj, ServoObj) {
+define(['./LED.js', './Button.js', './AnalogInput.js',  './DigitalOutput.js', './Speaker.js', './Servo.js', './Lcd.js'], function(LEDObj, ButtonObj, AnalogInputObj, DigitalOutObj, SpeakerObj, ServoObj, LcdObj) {
 
   /**
    * Create Board
@@ -99,6 +99,10 @@ define(['./LED.js', './Button.js', './AnalogInput.js',  './DigitalOutput.js', '.
     this.with(this.c.TYPE_SERVO, options, next);
   };
 
+  Board.prototype.withLcd = function(next) {
+    this.with(this.c.TYPE_LCD, options, next);
+  };
+
   /**
    * Create Speaker object on board
    * @param object options
@@ -156,6 +160,12 @@ define(['./LED.js', './Button.js', './AnalogInput.js',  './DigitalOutput.js', '.
         this.c.withServo(options.pin, function(err, pin) {
           if (err) { return next(err); }
           next(null, new ServoObj({"pin": pin, "type": what}, that.c));
+        });
+      break;
+      case this.c.TYPE_LCD:
+        this.c.withLcd(function(err) {
+          if (err) { return next(err); }
+          next(null, new LcdObj({"type": what}, that.c));
         });
       break;
     }

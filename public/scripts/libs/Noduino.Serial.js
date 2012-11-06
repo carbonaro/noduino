@@ -29,6 +29,7 @@ define(function(require, exports, module) {
   SerialNoduino.prototype.TYPE_DIGITALOUT = 0x34;
   SerialNoduino.prototype.TYPE_SPEAKER = 0x35;
   SerialNoduino.prototype.TYPE_SERVO = 0x36;
+  SerialNoduino.prototype.TYPE_LCD = 0x37;
   
   SerialNoduino.prototype.current = function() {
     return this.boards[0];
@@ -57,6 +58,10 @@ define(function(require, exports, module) {
   SerialNoduino.prototype.withServo = function(pin, next) {
     var p = this.current().normalizePin(pin || 9);
     next(null, pin);
+  };
+
+  SerialNoduino.prototype.withLcd = function(next) {
+    next(null);
   };
 
   SerialNoduino.prototype.withLED = function(pin, next) {

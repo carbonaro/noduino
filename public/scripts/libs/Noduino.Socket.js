@@ -137,6 +137,10 @@ define(function(require, exports, module) {
     next(null, pin);
   }
 
+  SocketNoduino.prototype.withLcd = function(next) {
+    next(null);
+  }
+
   SocketNoduino.prototype.withAnalogIn = function(pin, next) {
     this.pinMode(pin, this.MODE_IN);
     next(null, pin);

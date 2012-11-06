@@ -1,6 +1,7 @@
 var pl = 'scripts/libs/';
 var servo = null;
 var board = null;
+var lcd = null;
 var Noduino = null;
 require(["jquery", pl + 'Noduino.js', pl + 'Noduino.Socket.js', pl + 'Logger.HTML.js'], function($, NoduinoObj, Connector, Logger) {
   $(document).ready(function(e) {
@@ -14,6 +15,9 @@ require(["jquery", pl + 'Noduino.js', pl + 'Noduino.Socket.js', pl + 'Logger.HTM
       Noduino = new NoduinoObj({debug: true, host: 'http://' + host + ':8090', logger: {container: '#connection-log'}}, Connector, Logger);
       Noduino.connect(function(err, b) {
         board = b;
+        board.withLcd(function(err, l) {
+          lcd = l;
+        });
         board.withServo({pin: 9, pos: 45}, function(err, s) {
           servo = s;
           servo.attach();
