@@ -1,7 +1,7 @@
 define(function() {
   
   function Lcd(Connector) { 
-    if (false === (this instanceof Servo)) {
+    if (false === (this instanceof Lcd)) {
       return new Lcd(); }
 
     this.c      = Connector;
