@@ -1,5 +1,30 @@
 input.text#host(value=eth0_address, style="display:none")
-.btn-group                  
-  input.range#servo-slide(type="range", min="0", max="169", step="1", value="85")
-  input.interval#servo-value(type="input", value="85", disabled="disabled") 
-pre#connection-log
+.row
+  .jumbotron
+    h2 Servos
+  .btn-group
+    input.range#servo-slide(type="range", min="0", max="169", step="1", value="85")
+    input.interval#servo-value(type="input", value="85", disabled="disabled") 
+.row
+  .jumbotron
+    h2 LCD
+  .row
+    .btn.btn-info#lcd_on(style='margin:0 20px 10px') Backlight ON
+    .btn.btn-inverse#lcd_off(style='margin:0 10px 10px 0') Backlight OFF
+    .btn.btn-danger#lcd_clear(style='margin:0 10px 10px') Clear Screen
+  .row
+    .span3
+      textarea#lcd(rows="6", cols=14, maxlength=84, wrap="hard",style='font-size:18px')
+    .span8
+      p
+        | Offset x (
+        span(id='val_lcd_x') 0
+        | )
+      input.range#lcd_x(type="range", min="0", max="13", step="1", value="0")
+      p
+        | Offset y (
+        span(id='val_lcd_y') 0
+        | )
+      input.range#lcd_y(type="range", min="0", max="5", step="1", value="0")
+.row
+  pre#connection-log
